@@ -1,34 +1,23 @@
+from tinyfish import TinyFish
 import os
-import requests
 from dotenv import load_dotenv
 
 load_dotenv()
 
-TINYFISH_API_KEY = os.getenv("TINYFISH_API_KEY")
+client = TinyFish(api_key=os.getenv("TINYFISH_API_KEY"))
 
-BASE_URL = "https://api.tinyfish.ai/v1/webagent"
 
-def search_web(query: str):
-    """
-    Calls TinyFish Web Agent API to search the web.
-    """
+def search_web(url, goal):
 
-    headers = {
-        "Authorization": f"Bearer {TINYFISH_API_KEY}",
-        "Content-Type": "application/json"
-    }
+    with client.agent.stream(
+        url=url,
+        goal=goal,
+    ) as stream:
 
-    payload = {
-        "query": query,
-        "depth": 2
-    }
+        for event in stream:
 
-    response = requests.post(
-        f"{BASE_URL}/search",
-        json=payload,
-        headers=headers
-    )
+            # Only capture final result
+            if event.type.value == "COMPLETE":
+                return event.result_json
 
-    response.raise_for_status()
-
-    return response.json()
+    return {}

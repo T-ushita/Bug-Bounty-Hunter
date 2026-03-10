@@ -1,6 +1,7 @@
 from utils.tinyfish_client import search_web
 from rich import print
 
+
 class TinyFishDiscoveryAgent:
 
     def __init__(self):
@@ -9,20 +10,15 @@ class TinyFishDiscoveryAgent:
     def run(self, target):
 
         print(f"[bold cyan]Running {self.name}[/bold cyan]")
-        print(f"Searching web for: {target}")
 
-        results = search_web(target)
+        results = search_web(
+            url="https://google.com",
+            goal=f"Find websites related to {target}",
+        )
 
-        urls = []
+        print("[green]Discovered websites:[/green]")
 
-        for item in results.get("results", []):
-            url = item.get("url")
-            if url:
-                urls.append(url)
+        for site in results.get("websites", []):
+            print(site["url"])
 
-        print(f"[green]Discovered {len(urls)} URLs[/green]")
-
-        return {
-            "target": target,
-            "urls": urls
-        }
+        return results

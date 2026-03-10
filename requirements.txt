@@ -13,3 +13,4 @@ pydantic
 rich 
 networkx 
 graphviz
+tinyfish
