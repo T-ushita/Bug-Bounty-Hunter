@@ -1,0 +1,15 @@
+numpy
+pandas
+openai
+langgraph 
+langchain 
+langchain-openai 
+playwright 
+beautifulsoup4 
+requests 
+python-dotenv 
+streamlit 
+pydantic 
+rich 
+networkx 
+graphviz
