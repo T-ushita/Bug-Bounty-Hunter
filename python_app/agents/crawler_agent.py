@@ -4,7 +4,6 @@ Navigates real websites, discovers links, pages, forms, scripts, API endpoints.
 Streams live progress via SSE.
 """
 
-import os
 from tinyfish import TinyFish
 from dotenv import load_dotenv
 import json, os
@@ -12,6 +11,8 @@ import json, os
 load_dotenv()
 
 STATE_FILE = "crawler_state.json"
+
+client = TinyFish(api_key=os.getenv("TINYFISH_API_KEY"))
 
 def _write_streaming_url(url: str):
     """Persist streaming URL to state file so UI thread can pick it up."""
@@ -39,8 +40,6 @@ def crawl_url(url: str, progress_callback=None) -> dict:
     progress_callback(event_type, message) is called for each SSE event.
     Returns structured crawl result dict.
     """
-    client = TinyFish(api_key=os.getenv("TINYFISH_API_KEY"))
-
     goal = """
     Perform a security-focused crawl of this website. Extract:
     1. The full page HTML content (first 8000 chars)
@@ -75,25 +74,27 @@ def crawl_url(url: str, progress_callback=None) -> dict:
     try:
         with client.agent.stream(url=url, goal=goal) as stream:
             for event in stream:
-                event_type = event.get("type", "")
+                event_type = event.type.value
 
                 if event_type == "STARTED":
                     if progress_callback:
-                        progress_callback("STARTED", f"Run started: {event.get('runId', '')}")
+                        progress_callback("STARTED", f"Run started: {event.run_id}")
 
                 elif event_type == "STREAMING_URL":
-                    result["streaming_url"] = event.get("streamingUrl")
+                    result["streaming_url"] = event.streaming_url
                     _write_streaming_url(result["streaming_url"])
                     if progress_callback:
                         progress_callback("STREAMING_URL", f"Live browser: {result['streaming_url']}")
 
                 elif event_type == "PROGRESS":
                     if progress_callback:
-                        progress_callback("PROGRESS", event.get("purpose", "Working..."))
+                        progress_callback("PROGRESS", event.purpose)
 
                 elif event_type == "COMPLETE":
-                    if event.get("status") == "COMPLETED":
-                        raw = event.get("resultJson", {})
+                    if event.status == "COMPLETED":
+                        raw = event.result_json or {}
+                    # if event.get("status") == "COMPLETED":
+                    #     raw = event.get("resultJson", {})
                         result["raw_result"] = raw
                         # Map TinyFish output into our structure
                         result["html_snippet"] = raw.get("html_content", raw.get("html_snippet", ""))
@@ -108,7 +109,8 @@ def crawl_url(url: str, progress_callback=None) -> dict:
                         if progress_callback:
                             progress_callback("COMPLETE", "Crawl complete")
                     else:
-                        result["error"] = event.get("error", {}).get("message", "Automation failed")
+                        # result["error"] = event.get("error", {}).get("message", "Automation failed")
+                        result["error"] = event.error.message if event.error else "Automation failed"
                         if progress_callback:
                             progress_callback("ERROR", result["error"])
 
