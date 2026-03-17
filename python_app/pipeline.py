@@ -5,7 +5,7 @@ Runs all 5 agents in sequence for a given URL.
 
 from agents.crawler_agent import crawl_url
 from agents.recon_agent import run_recon
-from agents.vuln_detection_agent import detect_vulnerabilities
+from agents.vul_dect import detect_vulnerabilities
 from agents.triage_agent import triage_vulnerabilities
 from agents.report_agent import generate_report
 
