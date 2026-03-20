@@ -10,6 +10,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
 SYSTEM_PROMPT = """You are an expert web application security researcher performing reconnaissance.
 Your job is to analyze raw crawl data from a website and extract a structured attack surface profile.
 Always respond with valid JSON only — no markdown, no explanation."""
@@ -59,7 +61,6 @@ def run_recon(crawl_result: dict) -> dict:
     Takes crawl data and produces structured recon profile.
     Returns recon dict.
     """
-    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
     prompt = RECON_PROMPT.format(
         url=crawl_result.get("url", ""),
