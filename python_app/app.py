@@ -57,15 +57,20 @@ with st.sidebar:
     st.caption("Powered by TinyFish + Groq")
 
 # ── Route to pages ────────────────────────────────────────────────────────────
-if page == "🏠 Dashboard":
-    from ui.dashboard import render
-    render()
-elif page == "🔍 Single Scan":
-    from ui.single_scan import render
-    render()
-elif page == "🕷️ Auto Crawler":
-    from ui.auto_crawler import render
-    render()
-elif page == "📋 Reports":
-    from ui.reports import render
-    render()
+try:
+    if page == "🏠 Dashboard":
+        from ui.dashboard import render
+        render()
+    elif page == "🔍 Single Scan":
+        from ui.single_scan import render
+        render()
+    elif page == "🕷️ Auto Crawler":
+        from ui.auto_crawler import render
+        render()
+    elif page == "📋 Reports":
+        from ui.reports import render
+        render()
+except Exception as e:
+    st.error(f"Error loading page: {e}")
+    import traceback
+    st.text(traceback.format_exc())
