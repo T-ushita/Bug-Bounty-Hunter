@@ -1,1 +1,16 @@
-{"status": "idle", "queue": [], "visited": ["https://httpbin.org", "https://jsonplaceholder.typicode.com", "https://example.com"], "current_url": null, "streaming_url": "https://ip-3-101-64-235.tetra-data.production.tinyfish.io/tf-c84a0331-efd6-404a-aa85-cebb7ceb16f1/stream/0", "scan_results": [], "total_sites": 3, "total_vulns": 0, "total_critical": 0, "started_at": null, "last_updated": "2026-03-19T00:37:37.451492"}
+{
+  "status": "stopped",
+  "queue": [
+    "https://jsonplaceholder.typicode.com",
+    "https://example.com"
+  ],
+  "visited": [],
+  "current_url": "https://httpbin.org",
+  "streaming_url": "https://ip-3-101-64-235.tetra-data.production.tinyfish.io/tf-fcd562f7-ce9f-4bab-8c4b-0fbb6186b8b8/stream/0",
+  "scan_results": [],
+  "total_sites": 0,
+  "total_vulns": 0,
+  "total_critical": 0,
+  "started_at": null,
+  "last_updated": null
+}
