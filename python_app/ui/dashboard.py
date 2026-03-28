@@ -236,7 +236,7 @@ def render():
     </div>
     <p style="color:#94a3b8;font-size:14px;margin:0 0 20px 0;max-width:580px;">
         Multi-agent pipeline that autonomously discovers, explores, and analyzes websites for
-        security vulnerabilities. Each scan runs through 6 specialized AI agents.
+        security vulnerabilities. Each scan runs through 7 specialized AI agents.
     </p>
     </div>
     """, unsafe_allow_html=True)

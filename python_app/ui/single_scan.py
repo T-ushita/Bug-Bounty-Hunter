@@ -1,5 +1,5 @@
 """
-Single Scan page — scan one URL through the full 5-agent pipeline with live output.
+Single Scan page — scan one URL through the full 7-agent pipeline with live output.
 """
 
 import streamlit as st
