@@ -1,4 +1,4 @@
-# BugHunter AI — Python App
+# BugHunter AI - Python App
 
 Autonomous web vulnerability scanner powered by **TinyFish Web Agent** (real browser) + **Groq Llama-3.3-70b** (AI analysis). Runs a 7-stage pipeline that crawls, fuzzes, recons, detects, triages, and reports security findings — with a live Streamlit UI.
 
